@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  mount Rswag::Ui::Engine => '/api-docs'
+  mount Rswag::Api::Engine => '/api-docs'
   devise_for :admin_users, ActiveAdmin::Devise.config
   begin
     ActiveAdmin.routes(self)
@@ -10,6 +12,9 @@ Rails.application.routes.draw do
   devise_scope :users do
     post "token" => "users/refresh#create"
   end
+  get '/create_user' => "users#create_user"
+  post "/signup" => "users#create"
+  get '/users/me' => "users#me"
 
   devise_for :users,
              path: "",
@@ -25,6 +30,8 @@ Rails.application.routes.draw do
 
   resources :categories
   resources :items
+  resources :orders
+  resources :line_items
   resources :images do
     post :dropzone, on: :collection
   end

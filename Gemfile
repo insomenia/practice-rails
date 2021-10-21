@@ -23,6 +23,7 @@ group :development do
   gem "listen", "~> 3.2"
   gem "spring"
   gem "spring-watcher-listen", "~> 2.0.0"
+  gem "web-console", github: "insomenia-seongjun/web-console"
 end
 
 gem "activeadmin"
@@ -45,4 +46,11 @@ gem "ransack"
 gem "sass-rails"
 gem "tzinfo-data", platforms: %i[mingw mswin x64_mingw jruby]
 gem "versionist"
-gem "web-console", github: "insomenia-seongjun/web-console"
+# gem "web-console", github: "insomenia-seongjun/web-console"
+gem 'rspec-rails'
+gem 'rswag'
+
+gem "aws-sdk-cognitoidentity"
+gem "aws-sdk-cognitoidentityprovider"
+gem "aws-sdk-core"
+gem "aws-sdk-s3"
