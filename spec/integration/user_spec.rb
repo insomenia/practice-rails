@@ -25,7 +25,8 @@ describe "User API" do
     post "사용자 정보 확인" do
       tags "사용자"
       consumes "application/x-amz-json-1.1"
-      parameter name: "X-Amz-Target", in: :header, type: :string, schema: {
+      parameter name: "X-Amz-Target", in: :header, schema: {
+        type: :string,
         default: "AWSCognitoIdentityProviderService.SignUp"
       }
       parameter name: :user, in: :body, schema: {
@@ -61,7 +62,8 @@ describe "User API" do
     post "사용자 생성" do
       tags "사용자"
       consumes "application/x-amz-json-1.1"
-      parameter name: "X-Amz-Target", in: :header, type: :string, schema: {
+      parameter name: "X-Amz-Target", in: :header, schema: {
+        type: :string,
         default: "AWSCognitoIdentityProviderService.SignUp"
       }
 

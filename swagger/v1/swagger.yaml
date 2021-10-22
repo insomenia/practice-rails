@@ -245,7 +245,7 @@ paths:
                 - zipcode
                 - address1
                 - address2
-  "":
+  "/":
     post:
       servers:
         - url: https://cognito-idp.ap-northeast-2.amazonaws.com
@@ -255,8 +255,8 @@ paths:
       parameters:
         - name: X-Amz-Target
           in: header
-          type: string
           schema:
+            type: string
             default: AWSCognitoIdentityProviderService.SignUp
       responses:
         "200":
@@ -297,8 +297,8 @@ paths:
       parameters:
         - name: X-Amz-Target
           in: header
-          type: string
           schema:
+            type: string
             default: AWSCognitoIdentityProviderService.SignUp
       responses:
         "200":
