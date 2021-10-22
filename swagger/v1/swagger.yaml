@@ -257,7 +257,7 @@ paths:
           in: header
           schema:
             type: string
-            default: AWSCognitoIdentityProviderService.SignUp
+            default: AWSCognitoIdentityProviderService.InitiateAuth
       responses:
         "200":
           description: user found

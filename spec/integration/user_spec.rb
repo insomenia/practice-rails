@@ -27,7 +27,7 @@ describe "User API" do
       consumes "application/x-amz-json-1.1"
       parameter name: "X-Amz-Target", in: :header, schema: {
         type: :string,
-        default: "AWSCognitoIdentityProviderService.SignUp"
+        default: "AWSCognitoIdentityProviderService.InitiateAuth"
       }
       parameter name: :user, in: :body, schema: {
         type: :object,
