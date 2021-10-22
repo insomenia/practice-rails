@@ -1,6 +1,7 @@
 module CognitoJwt
   extend ActiveSupport::Concern
   included do
+    rescue_from ActiveRecord::RecordNotFound, with: :create_user
     rescue_from JWT::JWKError, with: :un_authorized
     rescue_from JWT::DecodeError, with: :un_authorized
 

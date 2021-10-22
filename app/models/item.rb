@@ -1,7 +1,7 @@
 class Item < ApplicationRecord
   include ImageUrl
   include Imagable
-  belongs_to :user
+  belongs_to :user, optional: true
   belongs_to :category
   has_many :line_items
   paginates_per 10

@@ -1,7 +1,7 @@
 class OrdersController < ApiController
-
+  before_action :authorize_access_request!
   def index
-    orders = Order.ransack(index_params).result
+    orders = current_api_user.orders.ransack(index_params).result
     render json: {
       orders: each_serialize(orders),
       total_count: orders.count
@@ -9,17 +9,17 @@ class OrdersController < ApiController
   end
 
   def show
-    order = Order.find(params[:id])
+    order = current_api_user.orders.find(params[:id])
     render json: serialize(order)
   end
 
   def create
-    order = Order.create(object_params)
+    order = current_api_user.orders.create(object_params)
     render json: serialize(order)
   end
 
   def update
-    order = User.find(params[:user_id]).orders.cart.first_or_create
+    order = current_api_user.orders.cart.first_or_create
     order.update(object_params)
     order.complete!
     render json: serialize(order)
@@ -34,5 +34,4 @@ class OrdersController < ApiController
   def object_params
     params.fetch(:order).permit(Order::PERMIT_COLUMNS)
   end
-
 end

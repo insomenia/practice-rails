@@ -6,7 +6,7 @@ describe "Orders API" do
     get "주문 리스트" do
       tags "주문(Order)" # 각 섹션의 이름이 들어갑니다. tags가 동일한 path끼리 자동으로 묶입니다.
       produces "application/json"
-
+      parameter name: "Authorization", in: :header, description: "Authorization ${access_token}", type: :string
       response "200", "items found" do
         schema type: :object,
                properties: {
@@ -32,6 +32,7 @@ describe "Orders API" do
       tags "주문(Order)"
       produces "application/json"
       parameter name: :id, in: :path, type: :string
+      parameter name: "Authorization", in: :header, description: "Authorization ${access_token}", type: :string
 
       response "200", "order found" do
         schema type: :object,
@@ -62,28 +63,27 @@ describe "Orders API" do
     patch "주문하기" do
       tags "주문(Order)"
       consumes "application/json"
+      parameter name: "Authorization", in: :header, description: "Authorization ${access_token}", type: :string
       parameter name: :id, in: :path, type: :string
       parameter name: :order, in: :body, schema: {
         type: :object,
         properties: {
-
-          user_id: { type: :integer },
           receiver_name: { type: :string, default: "" },
           receiver_phone: { type: :string, default: "" },
           zipcode: { type: :string, default: "" },
           address1: { type: :string, default: "" },
           address2: { type: :string, default: "" }
         },
-        required: %w[user_id receiver_name receiver_phone zipcode address1 address2]
+        required: %w[receiver_name receiver_phone zipcode address1 address2]
       }
 
       response "201", "order complete" do
-        let(:line_item) { { user_id: 1, receiver_name: "unknown", receiver_phone: "010-0000-0000", zipcode: "00000", address1: "", address2: "" } }
+        let(:line_item) { { receiver_name: "unknown", receiver_phone: "010-0000-0000", zipcode: "00000", address1: "", address2: "" } }
         run_test!
       end
 
       response "422", "invalid request" do
-        let(:line_item) { { user_id: 1, receiver_name: "unknown", receiver_phone: "010-0000-0000", zipcode: "00000", address1: "", address2: "" } }
+        let(:line_item) { {  receiver_name: "unknown", receiver_phone: "010-0000-0000", zipcode: "00000", address1: "", address2: "" } }
         run_test!
       end
     end

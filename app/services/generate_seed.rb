@@ -45,7 +45,7 @@ class GenerateSeed
   Item.instance_eval do
     def generate_seed
       puts "generate items"
-      50.times do
+      10.times do
         price_samples = [[50_000, 50_000], [50_000, 45_000], [40_000, 39_800], [5000, 5000], [60_000, 59_000], [80_000, 72_000]]
         item_price_sample = price_samples.sample
 
@@ -59,7 +59,7 @@ class GenerateSeed
           zipcode: "111111",
           address1: "서울시 #{ADDRESSES.sample}",
           address2: "#{rand(10_000)}호",
-          user_id: @@users.sample.id,
+          user_id: @@users.sample&.id,
           category_id: @@categories.sample.id
         }
 
