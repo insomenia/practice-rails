@@ -21,7 +21,7 @@ describe "User API" do
   #   end
   # end
 
-  path "" do
+  path "/?" do
     post "사용자 정보 확인" do
       tags "사용자"
       consumes "application/x-amz-json-1.1"
@@ -72,10 +72,9 @@ describe "User API" do
         properties: {
           ClientId: { type: :string, default: "7p64rveq2l3fhk9h47mt80vo9u" },
           Password: { type: :string, default: "" },
-          Username: { type: :string, default: "" },
-          UserStatus: { type: :string, default: "CONFIRMED" }
+          Username: { type: :string, default: "" }
         },
-        required: %w[Password ClientId Username UserStatus]
+        required: %w[Password ClientId Username]
       }
 
       response "200", "user found" do
