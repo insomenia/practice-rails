@@ -9,9 +9,9 @@ paths:
     get:
       summary: 상품 리스트
       tags:
-      - 상품(Item)
+        - 상품(Item)
       responses:
-        '200':
+        "200":
           description: items found
           content:
             application/json:
@@ -33,20 +33,20 @@ paths:
                   category:
                     type: object
                 required:
-                - id
+                  - id
   "/items/{id}":
     get:
       summary: 상품 상세정보
       tags:
-      - 상품(Item)
+        - 상품(Item)
       parameters:
-      - name: id
-        in: path
-        required: true
-        schema:
-          type: string
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
       responses:
-        '200':
+        "200":
           description: item found
           content:
             application/json:
@@ -68,19 +68,19 @@ paths:
                   category:
                     type: object
                 required:
-                - id
-        '404':
+                  - id
+        "404":
           description: item not found
   "/orders":
     post:
       summary: 장바구니 생성
       tags:
-      - 장바구니(LineItem)
+        - 장바구니(LineItem)
       parameters: []
       responses:
-        '201':
+        "201":
           description: order created
-        '422':
+        "422":
           description: invalid request
       requestBody:
         content:
@@ -94,14 +94,14 @@ paths:
                   type: string
                   default: cart
               required:
-              - user_id
-              - status
+                - user_id
+                - status
     get:
       summary: 주문 리스트
       tags:
-      - 주문(Order)
+        - 주문(Order)
       responses:
-        '200':
+        "200":
           description: items found
           content:
             application/json:
@@ -123,23 +123,23 @@ paths:
                   address2:
                     type: string
                 required:
-                - id
-                - status
-                - receiver_name
-                - receiver_phone
-                - zipcode
-                - address1
-                - address2
+                  - id
+                  - status
+                  - receiver_name
+                  - receiver_phone
+                  - zipcode
+                  - address1
+                  - address2
   "/line_items":
     post:
       summary: 장바구니 담기
       tags:
-      - 장바구니(LineItem)
+        - 장바구니(LineItem)
       parameters: []
       responses:
-        '201':
+        "201":
           description: cart item added
-        '422':
+        "422":
           description: invalid request
       requestBody:
         content:
@@ -154,22 +154,22 @@ paths:
                 quantity:
                   type: integer
               required:
-              - user_id
-              - item_id
-              - quantity
+                - user_id
+                - item_id
+                - quantity
   "/orders/{id}":
     get:
       summary: 주문 상세정보
       tags:
-      - 주문(Order)
+        - 주문(Order)
       parameters:
-      - name: id
-        in: path
-        required: true
-        schema:
-          type: string
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
       responses:
-        '200':
+        "200":
           description: order found
           content:
             application/json:
@@ -191,24 +191,24 @@ paths:
                   address2:
                     type: string
                 required:
-                - id
-                - status
-                - receiver_name
-                - receiver_phone
-                - zipcode
-                - address1
-                - address2
-        '404':
+                  - id
+                  - status
+                  - receiver_name
+                  - receiver_phone
+                  - zipcode
+                  - address1
+                  - address2
+        "404":
           description: order not found
     patch:
       summary: 주문하기
       tags:
-      - 주문(Order)
+        - 주문(Order)
       parameters: []
       responses:
-        '201':
+        "201":
           description: order complete
-        '422':
+        "422":
           description: invalid request
       requestBody:
         content:
@@ -220,41 +220,41 @@ paths:
                   type: integer
                 receiver_name:
                   type: string
-                  default: ''
+                  default: ""
                 receiver_phone:
                   type: string
-                  default: ''
+                  default: ""
                 zipcode:
                   type: string
-                  default: ''
+                  default: ""
                 address1:
                   type: string
-                  default: ''
+                  default: ""
                 address2:
                   type: string
-                  default: ''
+                  default: ""
               required:
-              - user_id
-              - receiver_name
-              - receiver_phone
-              - zipcode
-              - address1
-              - address2
-  '/ ':
+                - user_id
+                - receiver_name
+                - receiver_phone
+                - zipcode
+                - address1
+                - address2
+  "/ ":
     post:
       servers:
         - url: https://cognito-idp.ap-northeast-2.amazonaws.com
       summary: 사용자 정보 확인
       tags:
-      - 사용자
+        - 사용자
       parameters:
-      - name: X-Amz-Target
-        in: header
-        default: AWSCognitoIdentityProviderService.InitiateAuth
-        schema:
-          type: string
+        - name: X-Amz-Target
+          in: header
+          default: AWSCognitoIdentityProviderService.InitiateAuth
+          schema:
+            type: string
       responses:
-        '200':
+        "200":
           description: user found
       requestBody:
         content:
@@ -273,30 +273,30 @@ paths:
                   properties:
                     USERNAME:
                       type: string
-                      default: ''
+                      default: ""
                     PASSWORD:
                       type: string
-                      default: ''
+                      default: ""
               required:
-              - AuthFlow
-              - ClientId
-              - USERNAME
-              - PASSWORD
+                - AuthFlow
+                - ClientId
+                - USERNAME
+                - PASSWORD
   "/":
     post:
       servers:
         - url: https://cognito-idp.ap-northeast-2.amazonaws.com
       summary: 사용자 생성
       tags:
-      - 사용자
+        - 사용자
       parameters:
-      - name: X-Amz-Target
-        in: header
-        default: AWSCognitoIdentityProviderService.SignUp
-        schema:
-          type: string
+        - name: X-Amz-Target
+          in: header
+          default: AWSCognitoIdentityProviderService.SignUp
+          schema:
+            type: string
       responses:
-        '200':
+        "200":
           description: user found
       requestBody:
         content:
@@ -309,18 +309,17 @@ paths:
                   default: 7p64rveq2l3fhk9h47mt80vo9u
                 Password:
                   type: string
-                  default: ''
+                  default: ""
                 Username:
                   type: string
-                  default: ''
+                  default: ""
                 UserStatus:
                   type: string
                   default: CONFIRMED
               required:
-              - Password
-              - ClientId
-              - Username
-              - UserStatus
+                - Password
+                - ClientId
+                - Username
+                - UserStatus
 servers:
-- url: https://assignment.barber.work
-- url: https://cognito-idp.ap-northeast-2.amazonaws.com
+  - url: https://assignment.barber.work

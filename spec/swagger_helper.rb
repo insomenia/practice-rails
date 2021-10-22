@@ -31,8 +31,6 @@ RSpec.configure do |config|
           #     default: 'localhost:3000'
           #   }
           # }
-        }, {
-          url: "https://cognito-idp.ap-northeast-2.amazonaws.com"
         }
       ]
     }
