@@ -255,9 +255,9 @@ paths:
       parameters:
         - name: X-Amz-Target
           in: header
-          default: AWSCognitoIdentityProviderService.InitiateAuth
+          type: string
           schema:
-            type: string
+            default: AWSCognitoIdentityProviderService.SignUp
       responses:
         "200":
           description: user found
@@ -297,9 +297,9 @@ paths:
       parameters:
         - name: X-Amz-Target
           in: header
-          default: AWSCognitoIdentityProviderService.SignUp
+          type: string
           schema:
-            type: string
+            default: AWSCognitoIdentityProviderService.SignUp
       responses:
         "200":
           description: user found
