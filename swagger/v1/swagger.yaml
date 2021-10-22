@@ -240,8 +240,10 @@ paths:
               - zipcode
               - address1
               - address2
-  '':
+  '/ ':
     post:
+      servers:
+        - url: https://cognito-idp.ap-northeast-2.amazonaws.com
       summary: 사용자 정보 확인
       tags:
       - 사용자
@@ -282,6 +284,8 @@ paths:
               - PASSWORD
   "/":
     post:
+      servers:
+        - url: https://cognito-idp.ap-northeast-2.amazonaws.com
       summary: 사용자 생성
       tags:
       - 사용자
