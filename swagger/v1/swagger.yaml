@@ -216,6 +216,8 @@ paths:
             schema:
               type: object
               properties:
+                id:
+                  type: integer
                 user_id:
                   type: integer
                 receiver_name:
@@ -240,7 +242,7 @@ paths:
                 - zipcode
                 - address1
                 - address2
-  "/ ":
+  "":
     post:
       servers:
         - url: https://cognito-idp.ap-northeast-2.amazonaws.com
