@@ -332,12 +332,12 @@ ko:
         disabled: 비활성
         sold_out: 품절
     order:
-      state:
+      status:
         cart: 장바구니
         direct: 바로주문
         ready: 입금 대기
         paid: 결제완료
-        complete: 구매확정
+        complete: 구매완료
         cancel: 주문취소
         request_cancel: 취소요청
         partial_cancel: 부분취소
