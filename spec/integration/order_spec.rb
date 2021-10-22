@@ -62,10 +62,11 @@ describe "Orders API" do
     patch "주문하기" do
       tags "주문(Order)"
       consumes "application/json"
+      parameter name: :id, in: :path, type: :string
       parameter name: :order, in: :body, schema: {
         type: :object,
         properties: {
-          id: { type: :integer },
+
           user_id: { type: :integer },
           receiver_name: { type: :string, default: "" },
           receiver_phone: { type: :string, default: "" },
