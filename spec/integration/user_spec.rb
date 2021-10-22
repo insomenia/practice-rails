@@ -32,7 +32,7 @@ describe "User API" do
         type: :object,
         properties: {
           AuthFlow: { type: :string, default: "USER_PASSWORD_AUTH" },
-          ClientId: { type: :string, default: "" },
+          ClientId: { type: :string, default: "7p64rveq2l3fhk9h47mt80vo9u" },
           AuthParameters: {
             type: :object,
             properties: {
@@ -67,7 +67,7 @@ describe "User API" do
       parameter name: :user, in: :body, schema: {
         type: :object,
         properties: {
-          ClientId: { type: :string, default: "" },
+          ClientId: { type: :string, default: "7p64rveq2l3fhk9h47mt80vo9u" },
           Password: { type: :string, default: '' },
           Username: { type: :string, default: '' },
           UserStatus: { type: :string, default: 'CONFIRMED' }

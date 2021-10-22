@@ -267,7 +267,7 @@ paths:
                   default: USER_PASSWORD_AUTH
                 ClientId:
                   type: string
-                  default: ''
+                  default: '7p64rveq2l3fhk9h47mt80vo9u'
                 AuthParameters:
                   type: object
                   properties:
@@ -306,7 +306,7 @@ paths:
               properties:
                 ClientId:
                   type: string
-                  default: ''
+                  default: '7p64rveq2l3fhk9h47mt80vo9u'
                 Password:
                   type: string
                   default: ''
