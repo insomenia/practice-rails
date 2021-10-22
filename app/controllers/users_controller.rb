@@ -3,7 +3,6 @@ class UsersController < ApiController
   def create
     user = User.new(signup_params)
     user.uuid = sub
-    byebug
     user.save!
   end
 
