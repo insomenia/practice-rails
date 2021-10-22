@@ -1,2 +1,2 @@
-class <%= api_name %>Controller < <%= version %>BaseController
+class <%= api_name %>Controller < ApiController
 end

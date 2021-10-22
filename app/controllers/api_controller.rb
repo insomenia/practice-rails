@@ -2,9 +2,10 @@ class ApiController < ActionController::API
   before_action :configure_permitted_parameters, if: :devise_controller?
   # before_action :authorize_access_request!, if: :authorize_controller?
   include Pundit
-  include JWTSessions::RailsAuthorization
+  include CognitoJwt
+  # include JWTSessions::RailsAuthorization
   # include JsonErrors
-  rescue_from JWTSessions::Errors::Unauthorized, with: :un_authorized
+  # rescue_from JWTSessions::Errors::Unauthorized, with: :un_authorized
   rescue_from Pundit::NotAuthorizedError, with: :pundit_un_authorized
 
   def render_resource(resource)
@@ -41,14 +42,14 @@ class ApiController < ActionController::API
     devise_parameter_sanitizer.permit(:account_update, keys: user_fields)
   end
 
-  def current_api_user
-    authorize_access_request!
-    begin
-      @current_api_user ||= User.find(payload["user_id"])
-    rescue StandardError => e
-      @current_api_user = nil
-    end
-  end
+  # def current_api_user
+  #   authorize_access_request!
+  #   begin
+  #     @current_api_user ||= User.find(payload["user_id"])
+  #   rescue StandardError => e
+  #     @current_api_user = nil
+  #   end
+  # end
 
   def pundit_user
     @current_api_user if request.headers["Authorization"]
@@ -79,10 +80,10 @@ class ApiController < ActionController::API
     ).to_a
   end
 
-  def un_authorized(exception)
-    message = exception.message
-    render json: { error: "Not authorized", msg: message }, status: :unauthorized
-  end
+  # def un_authorized(exception)
+  #   message = exception.message
+  #   render json: { error: "Not authorized", msg: message }, status: :unauthorized
+  # end
 
   def pundit_un_authorized(exception)
     message = exception.message

@@ -1,7 +1,7 @@
 module Users
   class RegistrationsController < Devise::RegistrationsController
     protect_from_forgery with: :exception
-    skip_before_action :authenticate_scope!, only: [:update]
+    skip_before_action :authenticate_scope!, only: [:update, :create]
     skip_before_action :verify_authenticity_token
 
     def create
