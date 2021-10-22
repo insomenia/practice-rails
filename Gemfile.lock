@@ -355,8 +355,8 @@ DEPENDENCIES
   acts_as_list
   bcrypt (~> 3.1.7)
   bootsnap (>= 1.4.2)
-  capistrano (~> 3.7, >= 3.7.1)
-  capistrano-passenger (~> 0.2.0)
+  capistrano (~> 3.16.0)
+  capistrano-passenger (~> 0.2.1)
   capistrano-rails (~> 1.2)
   capistrano-rbenv (~> 2.1)
   carrierwave
@@ -393,4 +393,4 @@ RUBY VERSION
    ruby 2.6.5p114
 
 BUNDLED WITH
-   2.2.16
+   2.2.21
