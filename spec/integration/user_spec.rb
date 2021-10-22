@@ -22,8 +22,8 @@ describe "User API" do
   # end
 
   path "/?" do
-    post "사용자 정보 확인" do
-      tags "사용자"
+    post "Token" do
+      tags "Cognito"
       consumes "application/x-amz-json-1.1"
       parameter name: "X-Amz-Target", in: :header, schema: {
         type: :string,
@@ -52,15 +52,14 @@ describe "User API" do
                },
                required: ["id"]
 
-        let(:id) { User.create(email: "anonymous@practice.com", password: SecureRandom.hex(4).to_s, password_confirmation: SecureRandom.hex(4).to_s).id }
         run_test!
       end
     end
   end
 
   path "/" do
-    post "사용자 생성" do
-      tags "사용자"
+    post "Sign Up" do
+      tags "Cognito"
       consumes "application/x-amz-json-1.1"
       parameter name: "X-Amz-Target", in: :header, schema: {
         type: :string,
@@ -83,8 +82,6 @@ describe "User API" do
                  id: { type: :integer }
                },
                required: ["id"]
-
-        let(:id) { User.create(email: "anonymous@practice.com", password: SecureRandom.hex(4).to_s, password_confirmation: SecureRandom.hex(4).to_s).id }
         run_test!
       end
     end

@@ -1,5 +1,24 @@
 require "swagger_helper"
 
+ITEM_PROPERTIES = {
+  id: { type: :integer },
+  user_id: { type: :integer },
+  category_id: { type: :integer },
+  name: { type: :string },
+  list_price: { type: :integer },
+  sale_price: { type: :integer },
+  image_path: { type: :string },
+  category: { 
+    type: :object,
+    properties: {
+      id: { type: :integer },
+      title: { type: :string },
+      position: { type: :integer },
+      image_path: { type: :string },
+    }
+  }
+}
+
 
 describe "Items API" do
   # items#index
@@ -28,17 +47,7 @@ describe "Items API" do
                     type: :array,
                     items: {
                       type: :object,
-                      properties: {
-                        id: { type: :integer },
-                        user_id: { type: :integer },
-                        name: { type: :string },
-                        list_price: { type: :integer },
-                        sale_price: { type: :integer },
-                        image_path: { type: :string },
-                        category: { 
-                          type: :object 
-                        }
-                      }
+                      properties: ITEM_PROPERTIES
                     }
                   },
                   total_count: {
@@ -62,15 +71,21 @@ describe "Items API" do
 
       response "200", "item found" do
         schema type: :object,
-               properties: {
-                 id: { type: :integer },
-                 user_id: { type: :integer },
-                 name: { type: :string },
-                 list_price: { type: :integer },
-                 sale_price: { type: :integer },
-                 image_path: { type: :string },
-                 category: { type: :object }
-               },
+               properties: ITEM_PROPERTIES.except(:category).merge({
+                 description: {
+                   type: :string
+                 },
+                 images: {
+                   type: :array,
+                   items: {
+                     type: :object,
+                     properties: {
+                       id: { type: :integer },
+                       image_path: { type: :string }
+                     }
+                   }
+                 }
+               }),
                required: ["id"]
 
         let(:id) { Item.create(name: "item_unknown").id }

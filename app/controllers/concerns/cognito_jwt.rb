@@ -23,6 +23,13 @@ module CognitoJwt
       # csrf token 검증
     end
 
+    def create_user
+      debugger
+      user = User.new()
+      user.uuid = sub
+      user.save!
+    end
+
     protected
 
     def jwt_token

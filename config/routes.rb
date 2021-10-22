@@ -9,12 +9,10 @@ Rails.application.routes.draw do
   end
 
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
-  devise_scope :users do
-    post "token" => "users/refresh#create"
-  end
-  get '/create_user' => "users#create_user"
+  get '/cart' => 'orders#cart'
   post "/signup" => "users#create"
   get '/users/me' => "users#me"
+
 
   devise_for :users,
              path: "",
@@ -31,6 +29,7 @@ Rails.application.routes.draw do
   resources :categories
   resources :items
   resources :orders
+  
   resources :line_items
   resources :images do
     post :dropzone, on: :collection

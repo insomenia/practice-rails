@@ -1,26 +1,49 @@
 require "swagger_helper"
 
+ORDER_PROPERTIES = {
+  id: { type: :integer },
+  status: { type: :string },
+  receiver_name: { type: :string },
+  receiver_phone: { type: :string },
+  zipcode: { type: :string },
+  address1: { type: :string },
+  address2: { type: :string }
+}
+
 describe "Orders API" do
+  path "/cart" do
+    get "장바구니 조회" do
+      security [ Bearer: []]
+      tags "주문(Order)"
+      consumes "application/json"
+     
+      response "200", "order found" do
+        schema type: :object,
+               properties: ORDER_PROPERTIES,
+               required: %w[id status receiver_name receiver_phone zipcode address1 address2]
+
+        let(:order) { Order.create(status: "cart", receiver_name: "anonymous") }
+        run_test!
+      end
+    end
+  end
+
   # orders#index
   path "/orders" do
     get "주문 리스트" do
-      tags "주문(Order)" # 각 섹션의 이름이 들어갑니다. tags가 동일한 path끼리 자동으로 묶입니다.
+      tags "주문(Order)"
       produces "application/json"
-      parameter name: "Authorization", in: :header, description: "Authorization ${access_token}", type: :string
       response "200", "items found" do
         schema type: :object,
-               properties: {
-                 id: { type: :integer },
-                 status: { type: :string },
-                 receiver_name: { type: :string },
-                 receiver_phone: { type: :string },
-                 zipcode: { type: :string },
-                 address1: { type: :string },
-                 address2: { type: :string }
-               },
+               properties: ORDER_PROPERTIES,
                required: %w[id status receiver_name receiver_phone zipcode address1 address2]
 
         let(:id) { Order.create(status: "cart", receiver_name: "anonymous").id }
+        run_test!
+      end
+
+      response "404", "order not found" do
+        let(:id) { "invalid" }
         run_test!
       end
     end
@@ -32,19 +55,10 @@ describe "Orders API" do
       tags "주문(Order)"
       produces "application/json"
       parameter name: :id, in: :path, type: :string
-      parameter name: "Authorization", in: :header, description: "Authorization ${access_token}", type: :string
 
       response "200", "order found" do
         schema type: :object,
-               properties: {
-                 id: { type: :integer },
-                 status: { type: :string },
-                 receiver_name: { type: :string },
-                 receiver_phone: { type: :string },
-                 zipcode: { type: :string },
-                 address1: { type: :string },
-                 address2: { type: :string }
-               },
+               properties: ORDER_PROPERTIES,
                required: %w[id status receiver_name receiver_phone zipcode address1 address2]
 
         let(:id) { Order.create(status: "cart", receiver_name: "anonymous").id }
@@ -63,7 +77,6 @@ describe "Orders API" do
     patch "주문하기" do
       tags "주문(Order)"
       consumes "application/json"
-      parameter name: "Authorization", in: :header, description: "Authorization ${access_token}", type: :string
       parameter name: :id, in: :path, type: :string
       parameter name: :order, in: :body, schema: {
         type: :object,

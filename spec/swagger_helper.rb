@@ -22,15 +22,24 @@ RSpec.configure do |config|
         version: "v1",
         description: "인썸니아 프론트엔드 개발자 과제를 위한 백엔드 API 명세 입니다."
       },
+      components: {
+        securitySchemes: {
+          Bearer: {
+            description: 'JWT key necessary to use API calls',
+            type: :apiKey,
+            name: 'Authorization',
+            in: :header
+          }
+        }
+      },
+
       paths: {},
       servers: [
         {
           url: "http://localhost:3000"
-          # variables: {
-          #   defaultHost: {
-          #     default: 'localhost:3000'
-          #   }
-          # }
+        },
+        {
+          url: "https://cognito-idp.ap-northeast-2.amazonaws.com"
         }
       ]
     }

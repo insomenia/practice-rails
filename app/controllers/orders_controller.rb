@@ -8,6 +8,11 @@ class OrdersController < ApiController
     }
   end
 
+  def cart
+    order = current_api_user.cart
+    render json: serialize(order)
+  end
+
   def show
     order = current_api_user.orders.find(params[:id])
     render json: serialize(order)
