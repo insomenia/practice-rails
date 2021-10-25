@@ -10,7 +10,7 @@ class OrdersController < ApiController
 
   def cart
     order = current_api_user.cart
-    render json: serialize(order)
+    render json: serialize(order, serializer_name: CartSerializer)
   end
 
   def show
@@ -24,7 +24,7 @@ class OrdersController < ApiController
   end
 
   def update
-    order = current_api_user.orders.cart.first_or_create
+    order = current_api_user.cart
     order.update(object_params)
     order.complete!
     render json: serialize(order)

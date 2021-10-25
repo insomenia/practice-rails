@@ -1,12 +1,3 @@
 class LineItemSerializer < Panko::Serializer
-  attributes :id, :item, :order, :quantity, :total
-
-  def item
-    object.item
-  end
-
-  def order
-    object.order
-  end
-
+  attributes :id, :item_id, :order_id, :quantity, :total
 end

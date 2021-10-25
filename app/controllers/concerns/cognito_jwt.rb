@@ -1,12 +1,16 @@
 module CognitoJwt
   extend ActiveSupport::Concern
   included do
-    rescue_from ActiveRecord::RecordNotFound, with: :create_user
     rescue_from JWT::JWKError, with: :un_authorized
     rescue_from JWT::DecodeError, with: :un_authorized
 
     def current_api_user
       @current_api_user ||= (jwt_token.present? ? User.find_by!(uuid: sub) : nil)
+    rescue ActiveRecord::RecordNotFound
+      user = User.new
+      user.uuid = sub
+      user.save
+      user
     end
 
     def signed_in?
@@ -23,12 +27,7 @@ module CognitoJwt
       # csrf token 검증
     end
 
-    def create_user
-      debugger
-      user = User.new()
-      user.uuid = sub
-      user.save!
-    end
+    def create_user; end
 
     protected
 

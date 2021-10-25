@@ -16,64 +16,64 @@ paths:
     get:
       summary: 상품 리스트
       tags:
-      - 상품(Item)
+        - 상품(Item)
       parameters:
-      - name: page
-        in: query
-        description: 페이지 번호
-        schema:
-          type: integer
-      - name: q[category_id_eq]
-        in: query
-        description: 카테고리 아이디
-        schema:
-          type: string
-      - name: q[name_cont]
-        in: query
-        description: 상품명 검색
-        schema:
-          type: string
-      - name: q[list_price_gteq]
-        in: query
-        description: 가격 최소값
-        schema:
-          type: string
-      - name: q[list_price_lteq]
-        in: query
-        description: 가격 최대값
-        schema:
-          type: string
-      - name: q[sale_price_gteq]
-        in: query
-        description: 할인가격 최소값
-        schema:
-          type: string
-      - name: q[sale_price_lteq]
-        in: query
-        description: 할인가격 최대값
-        schema:
-          type: string
-      - name: q[created_at_gteq]
-        in: query
-        description: 생성일 최소값
-        schema:
-          type: string
-      - name: q[created_at_lteq]
-        in: query
-        description: 생성일 최대값
-        schema:
-          type: string
-      - name: s
-        in: query
-        description: sort by
-        schema:
-          enum:
-          - price desc
-          - price asc
-          - created_at desc
-          - created_at asc
+        - name: page
+          in: query
+          description: 페이지 번호
+          schema:
+            type: integer
+        - name: q[category_id_eq]
+          in: query
+          description: 카테고리 아이디
+          schema:
+            type: string
+        - name: q[name_cont]
+          in: query
+          description: 상품명 검색
+          schema:
+            type: string
+        - name: q[list_price_gteq]
+          in: query
+          description: 가격 최소값
+          schema:
+            type: string
+        - name: q[list_price_lteq]
+          in: query
+          description: 가격 최대값
+          schema:
+            type: string
+        - name: q[sale_price_gteq]
+          in: query
+          description: 할인가격 최소값
+          schema:
+            type: string
+        - name: q[sale_price_lteq]
+          in: query
+          description: 할인가격 최대값
+          schema:
+            type: string
+        - name: q[created_at_gteq]
+          in: query
+          description: 생성일 최소값
+          schema:
+            type: string
+        - name: q[created_at_lteq]
+          in: query
+          description: 생성일 최대값
+          schema:
+            type: string
+        - name: q[s]
+          in: query
+          description: sort by
+          schema:
+            enum:
+              - list_price desc
+              - list_price asc
+              - created_at desc
+              - created_at asc
       responses:
-        '200':
+        "200":
           description: items found
           content:
             application/json:
@@ -113,20 +113,20 @@ paths:
                   total_count:
                     type: integer
                 required:
-                - id
+                  - id
   "/items/{id}":
     get:
       summary: 상품 상세정보
       tags:
-      - 상품(Item)
+        - 상품(Item)
       parameters:
-      - name: id
-        in: path
-        required: true
-        schema:
-          type: string
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
       responses:
-        '200':
+        "200":
           description: item found
           content:
             application/json:
@@ -159,27 +159,19 @@ paths:
                         image_path:
                           type: string
                 required:
-                - id
-        '404':
+                  - id
+        "404":
           description: item not found
   "/cart":
     get:
       summary: 장바구니 조회
       security:
-      - Bearer: []
+        - Bearer: []
       tags:
-      - 주문(Order)
+        - 주문(Order)
       responses:
-        '200':
+        "200":
           description: order found
-  "/orders":
-    get:
-      summary: 주문 리스트
-      tags:
-      - 주문(Order)
-      responses:
-        '200':
-          description: items found
           content:
             application/json:
               schema:
@@ -200,28 +192,103 @@ paths:
                   address2:
                     type: string
                 required:
-                - id
-                - status
-                - receiver_name
-                - receiver_phone
-                - zipcode
-                - address1
-                - address2
-        '404':
+                  - id
+                  - status
+                  - receiver_name
+                  - receiver_phone
+                  - zipcode
+                  - address1
+                  - address2
+  "/line_items":
+    post:
+      summary: 장바구니 추가
+      security:
+        - Bearer: []
+      tags:
+        - 주문(Order)
+      parameters: []
+      responses:
+        "200":
+          description: create success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                  order_id:
+                    type: integer
+                  quantity:
+                    type: integer
+                  total:
+                    type: integer
+                  item_id:
+                    type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                quantity:
+                  type: integer
+                item_id:
+                  type: integer
+  "/orders":
+    get:
+      summary: 주문 리스트
+      security:
+        - Bearer: []
+      tags:
+        - 주문(Order)
+      responses:
+        "200":
+          description: orders found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                  status:
+                    type: string
+                  receiver_name:
+                    type: string
+                  receiver_phone:
+                    type: string
+                  zipcode:
+                    type: string
+                  address1:
+                    type: string
+                  address2:
+                    type: string
+                required:
+                  - id
+                  - status
+                  - receiver_name
+                  - receiver_phone
+                  - zipcode
+                  - address1
+                  - address2
+        "404":
           description: order not found
   "/orders/{id}":
     get:
       summary: 주문 상세정보
+      security:
+        - Bearer: []
       tags:
-      - 주문(Order)
+        - 주문(Order)
       parameters:
-      - name: id
-        in: path
-        required: true
-        schema:
-          type: string
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
       responses:
-        '200':
+        "200":
           description: order found
           content:
             application/json:
@@ -243,29 +310,31 @@ paths:
                   address2:
                     type: string
                 required:
-                - id
-                - status
-                - receiver_name
-                - receiver_phone
-                - zipcode
-                - address1
-                - address2
-        '404':
+                  - id
+                  - status
+                  - receiver_name
+                  - receiver_phone
+                  - zipcode
+                  - address1
+                  - address2
+        "404":
           description: order not found
     patch:
       summary: 주문하기
+      security:
+        - Bearer: []
       tags:
-      - 주문(Order)
+        - 주문(Order)
       parameters:
-      - name: id
-        in: path
-        required: true
-        schema:
-          type: string
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
       responses:
-        '201':
+        "201":
           description: order complete
-        '422':
+        "422":
           description: invalid request
       requestBody:
         content:
@@ -275,38 +344,40 @@ paths:
               properties:
                 receiver_name:
                   type: string
-                  default: ''
+                  default: ""
                 receiver_phone:
                   type: string
-                  default: ''
+                  default: ""
                 zipcode:
                   type: string
-                  default: ''
+                  default: ""
                 address1:
                   type: string
-                  default: ''
+                  default: ""
                 address2:
                   type: string
-                  default: ''
+                  default: ""
               required:
-              - receiver_name
-              - receiver_phone
-              - zipcode
-              - address1
-              - address2
+                - receiver_name
+                - receiver_phone
+                - zipcode
+                - address1
+                - address2
   "/?":
     post:
       summary: Token
       tags:
-      - Cognito
+        - Cognito
+      servers:
+        - url: https://cognito-idp.ap-northeast-2.amazonaws.com
       parameters:
-      - name: X-Amz-Target
-        in: header
-        schema:
-          type: string
-          default: AWSCognitoIdentityProviderService.InitiateAuth
+        - name: X-Amz-Target
+          in: header
+          schema:
+            type: string
+            default: AWSCognitoIdentityProviderService.InitiateAuth
       responses:
-        '200':
+        "200":
           description: user found
       requestBody:
         content:
@@ -325,28 +396,30 @@ paths:
                   properties:
                     USERNAME:
                       type: string
-                      default: ''
+                      default: ""
                     PASSWORD:
                       type: string
-                      default: ''
+                      default: ""
               required:
-              - AuthFlow
-              - ClientId
-              - USERNAME
-              - PASSWORD
+                - AuthFlow
+                - ClientId
+                - USERNAME
+                - PASSWORD
   "/":
     post:
+      servers:
+        - url: https://cognito-idp.ap-northeast-2.amazonaws.com
       summary: Sign Up
       tags:
-      - Cognito
+        - Cognito
       parameters:
-      - name: X-Amz-Target
-        in: header
-        schema:
-          type: string
-          default: AWSCognitoIdentityProviderService.SignUp
+        - name: X-Amz-Target
+          in: header
+          schema:
+            type: string
+            default: AWSCognitoIdentityProviderService.SignUp
       responses:
-        '200':
+        "200":
           description: user found
       requestBody:
         content:
@@ -359,14 +432,13 @@ paths:
                   default: 7p64rveq2l3fhk9h47mt80vo9u
                 Password:
                   type: string
-                  default: ''
+                  default: ""
                 Username:
                   type: string
-                  default: ''
+                  default: ""
               required:
-              - Password
-              - ClientId
-              - Username
+                - Password
+                - ClientId
+                - Username
 servers:
-- url: http://localhost:3000
-- url: https://cognito-idp.ap-northeast-2.amazonaws.com
+  - url: https://assignment.barber.work

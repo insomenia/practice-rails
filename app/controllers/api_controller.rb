@@ -42,15 +42,6 @@ class ApiController < ActionController::API
     devise_parameter_sanitizer.permit(:account_update, keys: user_fields)
   end
 
-  # def current_api_user
-  #   authorize_access_request!
-  #   begin
-  #     @current_api_user ||= User.find(payload["user_id"])
-  #   rescue StandardError => e
-  #     @current_api_user = nil
-  #   end
-  # end
-
   def pundit_user
     @current_api_user if request.headers["Authorization"]
   end
@@ -79,11 +70,6 @@ class ApiController < ActionController::API
       except: except
     ).to_a
   end
-
-  # def un_authorized(exception)
-  #   message = exception.message
-  #   render json: { error: "Not authorized", msg: message }, status: :unauthorized
-  # end
 
   def pundit_un_authorized(exception)
     message = exception.message

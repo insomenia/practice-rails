@@ -9,14 +9,21 @@ ORDER_PROPERTIES = {
   address1: { type: :string },
   address2: { type: :string }
 }
+LINE_ITEM_PROPERTIES = {
+  id: { type: :integer },
+  order_id: { type: :integer },
+  quantity: { type: :integer },
+  total: { type: :integer },
+  item_id: { type: :integer }
+
+}
 
 describe "Orders API" do
   path "/cart" do
     get "장바구니 조회" do
-      security [ Bearer: []]
+      security [Bearer: []]
       tags "주문(Order)"
-      consumes "application/json"
-     
+      produces "application/json"
       response "200", "order found" do
         schema type: :object,
                properties: ORDER_PROPERTIES,
@@ -28,12 +35,33 @@ describe "Orders API" do
     end
   end
 
+  path "/line_items" do
+    post "장바구니 추가" do
+      security [Bearer: []]
+      tags "주문(Order)"
+      produces "application/json"
+      consumes "application/json"
+      parameter name: :line_item, in: :body, schema: {
+        type: :object,
+        properties: LINE_ITEM_PROPERTIES.except(:id, :order_id, :total)
+      }
+
+      response "200", "create success" do
+        schema type: :object,
+               properties: LINE_ITEM_PROPERTIES
+        let(:order) { Order.create(status: "cart", receiver_name: "anonymous") }
+        run_test!
+      end
+    end
+  end
+
   # orders#index
   path "/orders" do
     get "주문 리스트" do
+      security [Bearer: []]
       tags "주문(Order)"
       produces "application/json"
-      response "200", "items found" do
+      response "200", "orders found" do
         schema type: :object,
                properties: ORDER_PROPERTIES,
                required: %w[id status receiver_name receiver_phone zipcode address1 address2]
@@ -52,6 +80,7 @@ describe "Orders API" do
   # orders#show
   path "/orders/{id}" do
     get "주문 상세정보" do
+      security [Bearer: []]
       tags "주문(Order)"
       produces "application/json"
       parameter name: :id, in: :path, type: :string
@@ -75,6 +104,7 @@ describe "Orders API" do
   # order#update
   path "/orders/{id}" do
     patch "주문하기" do
+      security [Bearer: []]
       tags "주문(Order)"
       consumes "application/json"
       parameter name: :id, in: :path, type: :string
@@ -96,7 +126,7 @@ describe "Orders API" do
       end
 
       response "422", "invalid request" do
-        let(:line_item) { {  receiver_name: "unknown", receiver_phone: "010-0000-0000", zipcode: "00000", address1: "", address2: "" } }
+        let(:line_item) { { receiver_name: "unknown", receiver_phone: "010-0000-0000", zipcode: "00000", address1: "", address2: "" } }
         run_test!
       end
     end

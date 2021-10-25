@@ -25,9 +25,9 @@ RSpec.configure do |config|
       components: {
         securitySchemes: {
           Bearer: {
-            description: 'JWT key necessary to use API calls',
+            description: "JWT key necessary to use API calls",
             type: :apiKey,
-            name: 'Authorization',
+            name: "Authorization",
             in: :header
           }
         }
@@ -36,10 +36,7 @@ RSpec.configure do |config|
       paths: {},
       servers: [
         {
-          url: "http://localhost:3000"
-        },
-        {
-          url: "https://cognito-idp.ap-northeast-2.amazonaws.com"
+          url: "https://assignment.barber.work/"
         }
       ]
     }
