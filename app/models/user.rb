@@ -9,7 +9,7 @@ class User < ApplicationRecord
   has_many :orders, dependent: :destroy
   enum gender: { unknown: 0, male: 1, female: 2 }
 
-  has_one :cart, class_name: "Order"
+  has_one :cart, -> { cart }, class_name: "Order"
 
   validates :uuid, uniqueness: true
 
