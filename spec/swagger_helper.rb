@@ -37,6 +37,9 @@ RSpec.configure do |config|
       servers: [
         {
           url: "https://assignment.barber.work/"
+        },
+        {
+          url: "http://localhost:4000"
         }
       ]
     }

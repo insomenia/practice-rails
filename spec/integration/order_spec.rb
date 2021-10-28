@@ -1,14 +1,5 @@
 require "swagger_helper"
 
-ORDER_PROPERTIES = {
-  id: { type: :integer },
-  status: { type: :string },
-  receiver_name: { type: :string },
-  receiver_phone: { type: :string },
-  zipcode: { type: :string },
-  address1: { type: :string },
-  address2: { type: :string }
-}
 LINE_ITEM_PROPERTIES = {
   id: { type: :integer },
   order_id: { type: :integer },
@@ -18,43 +9,18 @@ LINE_ITEM_PROPERTIES = {
 
 }
 
+ORDER_PROPERTIES = {
+  id: { type: :integer },
+  status: { type: :string },
+  receiver_name: { type: :string },
+  receiver_phone: { type: :string },
+  zipcode: { type: :string },
+  address1: { type: :string },
+  address2: { type: :string },
+  line_items: { type: :array, items: { type: :object, properties: LINE_ITEM_PROPERTIES } }
+}
+
 describe "Orders API" do
-  path "/cart" do
-    get "장바구니 조회" do
-      security [Bearer: []]
-      tags "주문(Order)"
-      produces "application/json"
-      response "200", "order found" do
-        schema type: :object,
-               properties: ORDER_PROPERTIES,
-               required: %w[id status receiver_name receiver_phone zipcode address1 address2]
-
-        let(:order) { Order.create(status: "cart", receiver_name: "anonymous") }
-        run_test!
-      end
-    end
-  end
-
-  path "/line_items" do
-    post "장바구니 추가" do
-      security [Bearer: []]
-      tags "주문(Order)"
-      produces "application/json"
-      consumes "application/json"
-      parameter name: :line_item, in: :body, schema: {
-        type: :object,
-        properties: LINE_ITEM_PROPERTIES.except(:id, :order_id, :total)
-      }
-
-      response "200", "create success" do
-        schema type: :object,
-               properties: LINE_ITEM_PROPERTIES
-        let(:order) { Order.create(status: "cart", receiver_name: "anonymous") }
-        run_test!
-      end
-    end
-  end
-
   # orders#index
   path "/orders" do
     get "주문 리스트" do
@@ -63,7 +29,7 @@ describe "Orders API" do
       produces "application/json"
       response "200", "orders found" do
         schema type: :object,
-               properties: ORDER_PROPERTIES,
+               properties: ORDER_PROPERTIES.except(:zipcode, :address1, :address2, :line_items),
                required: %w[id status receiver_name receiver_phone zipcode address1 address2]
 
         let(:id) { Order.create(status: "cart", receiver_name: "anonymous").id }

@@ -6,6 +6,19 @@ class LineItemsController < ApiController
     render json: serialize(line_item)
   end
 
+  def destroy
+    order = current_api_user.cart
+    line_item = order.line_items.find(params[:id])
+    line_item.destroy
+  end
+
+  def update
+    order = current_api_user.cart
+    line_item = order.line_items.find(params[:id])
+    line_item.update(object_params.except(:item_id))
+    render json: serialize(line_item)
+  end
+
   private
 
   def object_params

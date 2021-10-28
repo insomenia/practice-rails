@@ -168,7 +168,7 @@ paths:
       security:
         - Bearer: []
       tags:
-        - 주문(Order)
+        - LineItem
       responses:
         "200":
           description: order found
@@ -191,6 +191,21 @@ paths:
                     type: string
                   address2:
                     type: string
+                  line_items:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                        order_id:
+                          type: integer
+                        quantity:
+                          type: integer
+                        total:
+                          type: integer
+                        item_id:
+                          type: integer
                 required:
                   - id
                   - status
@@ -201,11 +216,11 @@ paths:
                   - address2
   "/line_items":
     post:
-      summary: 장바구니 추가
+      summary: LineItem 추가
       security:
         - Bearer: []
       tags:
-        - 주문(Order)
+        - LineItem
       parameters: []
       responses:
         "200":
@@ -235,6 +250,60 @@ paths:
                   type: integer
                 item_id:
                   type: integer
+  "/line_items/{id}":
+    patch:
+      summary: LineItem 업데이트
+      security:
+        - Bearer: []
+      tags:
+        - LineItem
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: update success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                  order_id:
+                    type: integer
+                  quantity:
+                    type: integer
+                  total:
+                    type: integer
+                  item_id:
+                    type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                quantity:
+                  type: integer
+    delete:
+      summary: LineItem 삭제
+      security:
+        - Bearer: []
+      tags:
+        - LineItem
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "204":
+          description: delete success
   "/orders":
     get:
       summary: 주문 리스트
@@ -257,12 +326,6 @@ paths:
                   receiver_name:
                     type: string
                   receiver_phone:
-                    type: string
-                  zipcode:
-                    type: string
-                  address1:
-                    type: string
-                  address2:
                     type: string
                 required:
                   - id
@@ -309,6 +372,21 @@ paths:
                     type: string
                   address2:
                     type: string
+                  line_items:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                        order_id:
+                          type: integer
+                        quantity:
+                          type: integer
+                        total:
+                          type: integer
+                        item_id:
+                          type: integer
                 required:
                   - id
                   - status
@@ -365,11 +443,11 @@ paths:
                 - address2
   "/?":
     post:
+      servers:
+        - url: https://cognito-idp.ap-northeast-2.amazonaws.com
       summary: Token
       tags:
         - Cognito
-      servers:
-        - url: https://cognito-idp.ap-northeast-2.amazonaws.com
       parameters:
         - name: X-Amz-Target
           in: header
@@ -441,4 +519,4 @@ paths:
                 - ClientId
                 - Username
 servers:
-  - url: https://assignment.barber.work
+  - url: https://assignment.barber.work/
